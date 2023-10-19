@@ -8,7 +8,6 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\User\UserIndexResource;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -33,7 +32,7 @@ class UserController extends Controller
                 'last_page' => $users->lastPage(),
                 'from' => $users->firstItem(),
                 'to' => $users->lastItem(),
-            ]
+            ],
         ]);
     }
 
@@ -47,7 +46,7 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Berhasil menambahkan data pengguna',
-            'data' => new UserResource($user)
+            'data' => new UserResource($user),
         ], Response::HTTP_CREATED);
     }
 
@@ -59,7 +58,7 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Berhasil menampilkan data pengguna',
-            'data' => new UserResource($user)
+            'data' => new UserResource($user),
         ]);
     }
 
@@ -73,7 +72,7 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Berhasil mengubah data pengguna',
-            'data' => new UserResource($user)
+            'data' => new UserResource($user),
         ]);
     }
 

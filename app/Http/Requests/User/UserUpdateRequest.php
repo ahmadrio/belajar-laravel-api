@@ -23,9 +23,9 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $this->user->id . ',id', // unique:users,email,21,id
-            'password'=> 'required|string',
-            'is_admin'=> 'required|boolean',
+            'email' => 'required|email|unique:users,email,'.$this->user->id.',id', // unique:users,email,21,id
+            'password' => 'required|string',
+            'is_admin' => 'required|boolean',
         ];
     }
 }
