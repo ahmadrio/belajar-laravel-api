@@ -73,16 +73,51 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'upload_file' => 'nullable|file',
+        ]);
+
+        $upload_file = $task->upload_file;
+        if ($request->hasFile('upload_file')) {
+            // hapus dulu file yang ada di database
+            \File::delete(storage_path("app/{$upload_file}"));
+
+            // lakukan upload ulang
+            $extension = $request->file('upload_file')->getClientOriginalExtension();
+            if (in_array($extension, ['jpg', 'png', 'jpeg'])) {
+                $upload_file = $request->file('upload_file')->store('public/images');
+            } else {
+                $upload_file = $request->file('upload_file')->store('public/files');
+            }
+        }
+
+        $task->update([
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'upload_file' => $upload_file,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Berhasil mengubah tugas',
+            'data' => new TaskResource($task),
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        //
+        \File::delete(storage_path("app/{$task->upload_file}"));
+
+        $task->delete();
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }

@@ -20,5 +20,6 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::apiResource('/users', UserController::class);
+
     Route::apiResource('/tasks', TaskController::class);
 });
