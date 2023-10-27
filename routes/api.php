@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
+    Route::post('/get-token', [LoginController::class, 'getToken']);
+    Route::post('/logout', [LoginController::class, 'logout']);
+
     Route::apiResource('/users', UserController::class);
 
     Route::apiResource('/tasks', TaskController::class);

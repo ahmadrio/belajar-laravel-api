@@ -35,4 +35,20 @@ class LoginController extends Controller
             ],
         ]);
     }
+
+    public function getToken()
+    {
+        return auth()->user();
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Logout Berhasil',
+            'data' => [],
+        ]);
+    }
 }
